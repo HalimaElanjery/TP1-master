@@ -1,0 +1,5 @@
+.principal { width: 100%; }
+.gauche { width: 50%; vertical-align: top; padding: 10px; }
+.droite { width: 50%; vertical-align: top; padding: 10px; }
+.erreurs { color: red; }
+textarea { font-family: monospace; }

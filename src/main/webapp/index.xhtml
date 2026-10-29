@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Chat avec Gemini</title>
+    <h:outputStylesheet name="css/mycsslayout.css"/>
+    <h:outputScript name="js/script.js"/>
+</h:head>
+<h:body>
+    <h:form id="form">
+        <h:messages styleClass="erreurs"/>
+
+        <h:panelGroup>
+            <h:outputLabel for="role" value="Rôle de l'API : "/>
+            <p:selectOneMenu id="role" value="#{bb.roleSysteme}" required="true"
+                             requiredMessage="Choisissez un rôle"
+                             disabled="#{not bb.roleSystemeChangeable}">
+                <f:selectItem itemLabel="Choisir un rôle" itemValue="" noSelectionOption="true"/>
+                <f:selectItems value="#{bb.rolesSysteme}"/>
+            </p:selectOneMenu>
+            <h:commandButton value="Nouveau chat" action="#{bb.nouveauChat}" immediate="true"/>
+        </h:panelGroup>
+
+        <h:panelGrid columns="2" styleClass="principal" columnClasses="gauche,droite">
+            <h:panelGroup layout="block">
+                <h:panelGroup id="questionetreponse">
+                    <h:outputLabel for="question" value="Question : "/>
+                    <button type="button" onclick="copierTexte('form:question')">Copier question</button>
+                    <h:commandButton value="Effacer question et réponse" immediate="true"
+                                     action="#{bb.effacer}"/>
+                    <br/>
+                    <h:inputTextarea id="question" value="#{bb.question}" rows="5" cols="60"/>
+                    <br/>
+                    <h:commandButton value="Envoyer la question" action="#{bb.envoyer}"/>
+                    <br/>
+                    <h:outputLabel for="reponse" value="Réponse : "/>
+                    <button type="button" onclick="copierTexte('form:reponse')">Copier réponse</button>
+                    <br/>
+                    <h:inputTextarea id="reponse" value="#{bb.reponse}" rows="12" cols="60" readonly="true"/>
+
+                    <p:outputPanel style="display:flex; align-items: center; gap: 10px">
+                        <h:outputText value="Mode debug : "/>
+                        <p:toggleSwitch id="debugSwitch" value="#{bb.debug}" label="Mode debug">
+                            <p:ajax update="debugPanel"/>
+                        </p:toggleSwitch>
+                        <p:tooltip for="debugSwitch"
+                                   value="Active ou non l'affichage du JSON sur les requêtes et réponses du LLM."/>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+                <h:panelGroup id="debugPanel" layout="block">
+                    <h:panelGroup rendered="#{bb.debug}">
+                        <h:outputLabel for="requetejson" value="JSON de la requête : "/>
+                        <button type="button" onclick="copierTexte('form:requetejson')">Copier</button>
+                        <br/>
+                        <h:inputTextarea id="requetejson" value="#{bb.texteRequeteJson}"
+                                         rows="12" cols="60" readonly="true"/>
+                        <br/>
+                        <h:outputLabel for="reponsejson" value="JSON de la réponse : "/>
+                        <button type="button" onclick="copierTexte('form:reponsejson')">Copier</button>
+                        <br/>
+                        <h:inputTextarea id="reponsejson" value="#{bb.texteReponseJson}"
+                                         rows="12" cols="60" readonly="true"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup>
+                <h:outputLabel for="conversation" value="Conversation : "/>
+                <button type="button" onclick="copierTexte('form:conversation')">Copier conversation</button>
+                <br/>
+                <h:inputTextarea id="conversation" value="#{bb.conversation}" rows="30" cols="60" readonly="true"/>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>
