@@ -1,4 +1,4 @@
 package ht.fds.mbds.elanjery.tp1.llm;
 
-public class LlmInteraction {
+public record LlmInteraction(String questionJson, String reponseJson, String reponseExtraite) {
 }
