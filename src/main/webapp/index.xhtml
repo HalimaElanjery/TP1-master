@@ -25,8 +25,10 @@
         </h:panelGroup>
 
         <h:panelGrid columns="2" styleClass="principal" columnClasses="gauche,droite">
-            <h:panelGroup layout="block">
-                <h:panelGroup id="questionetreponse">
+
+            <h:panelGroup id="panelgauche" layout="block">
+
+                <h:panelGroup id="questionetreponse" layout="block">
                     <h:outputLabel for="question" value="Question : "/>
                     <button type="button" onclick="copierTexte('form:question')">Copier question</button>
                     <h:commandButton value="Effacer question et réponse" immediate="true"
@@ -41,18 +43,20 @@
                     <br/>
                     <h:inputTextarea id="reponse" value="#{bb.reponse}" rows="12" cols="60" readonly="true"/>
 
+                    <!-- Bouton debug : code du prof (+ p:ajax pour afficher le panel sans soumettre) -->
                     <p:outputPanel style="display:flex; align-items: center; gap: 10px">
                         <h:outputText value="Mode debug : "/>
-                        <p:toggleSwitch id="debugSwitch" value="#{bb.debug}" label="Mode debug">
-                            <p:ajax update="debugPanel"/>
+                        <p:toggleSwitch id="debugSwitch" value="#{bb.debug}" styleClass="mb-2" label="Mode debug">
+                            <p:ajax update="debug"/>
                         </p:toggleSwitch>
                         <p:tooltip for="debugSwitch"
-                                   value="Active ou non l'affichage du JSON sur les requêtes et réponses du LLM."/>
+                                   value="Active ou non l'affichage du JSON sur les requêtes et réponses du LLM." />
                     </p:outputPanel>
                 </h:panelGroup>
 
-                <h:panelGroup id="debugPanel" layout="block">
-                    <h:panelGroup rendered="#{bb.debug}">
+                <!-- Panel debug : écrit par moi, à remplacer par celui du prof si vous l'avez -->
+                <h:panelGroup id="debug" layout="block">
+                    <h:panelGroup rendered="#{bb.debug}" layout="block">
                         <h:outputLabel for="requetejson" value="JSON de la requête : "/>
                         <button type="button" onclick="copierTexte('form:requetejson')">Copier</button>
                         <br/>
@@ -66,14 +70,16 @@
                                          rows="12" cols="60" readonly="true"/>
                     </h:panelGroup>
                 </h:panelGroup>
+
             </h:panelGroup>
 
-            <h:panelGroup>
+            <h:panelGroup id="panneaudroit" layout="block">
                 <h:outputLabel for="conversation" value="Conversation : "/>
                 <button type="button" onclick="copierTexte('form:conversation')">Copier conversation</button>
                 <br/>
                 <h:inputTextarea id="conversation" value="#{bb.conversation}" rows="30" cols="60" readonly="true"/>
             </h:panelGroup>
+
         </h:panelGrid>
     </h:form>
 </h:body>
