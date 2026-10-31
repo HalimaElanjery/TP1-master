@@ -26,12 +26,12 @@ public class Bb implements Serializable {
     private String reponse;
     private StringBuilder conversation = new StringBuilder();
 
-    // Mode debug (étape 6)
+    // Mode debug
     private boolean debug;
     private String texteRequeteJson;
     private String texteReponseJson;
 
-    // Appel du LLM (étape 7)
+    // Appel du LLM
     @Inject
     private JsonAdapterPourGemini jsonAdapter;
 
@@ -60,6 +60,19 @@ public class Bb implements Serializable {
                 Your are a travel guide. If the user type the name of a country or of a town,
                 you tell them what are the main places to visit in the country or the town
                 are you tell them the average price of a meal.
+                """);
+        // Rôle personnel
+        ROLES.put("Chef anti-gaspi marocain", """
+                You are a Moroccan home-cooking chef who hates food waste.
+                When the user lists the ingredients they have at home, you propose exactly one
+                Moroccan recipe that uses most of them. Answer in French, in this format:
+                1. Name of the dish (with its name in Arabic letters in parentheses).
+                2. Ingredients to add (maximum three, simple ones).
+                3. Preparation in four short steps.
+                4. Total cooking time.
+                Then ask the user one question: do they want a vegetarian version, or a faster one?
+                When the user answers, adapt the same recipe and keep the same format.
+                Use a warm tone.
                 """);
     }
 
