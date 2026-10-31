@@ -26,12 +26,12 @@ public class Bb implements Serializable {
     private String reponse;
     private StringBuilder conversation = new StringBuilder();
 
-    // Mode debug (étape 6)
+    // Mode debug
     private boolean debug;
     private String texteRequeteJson;
     private String texteReponseJson;
 
-    // Appel du LLM (étape 7)
+    // Appel du LLM
     @Inject
     private JsonAdapterPourGemini jsonAdapter;
 
@@ -60,6 +60,14 @@ public class Bb implements Serializable {
                 Your are a travel guide. If the user type the name of a country or of a town,
                 you tell them what are the main places to visit in the country or the town
                 are you tell them the average price of a meal.
+                """);
+        // Rôle personnel (à remplacer par votre propre idée)
+        ROLES.put("Coach de révision", """
+                You are a friendly revision coach. When the user types a topic or a question,
+                you first answer it in two short sentences, then you ask exactly one quiz question
+                on the same topic to check that the user understood. Never give the answer to your
+                own quiz question until the user has tried to answer. Answer in the language
+                used by the user, in an encouraging tone.
                 """);
     }
 
